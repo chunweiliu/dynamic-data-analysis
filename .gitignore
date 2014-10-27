@@ -1,0 +1,12 @@
+# ignore latex generated dummies
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.synctex.gz
+
+# ignore editor generated dummies
+*.swp
+*.m~
