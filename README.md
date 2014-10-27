@@ -21,6 +21,6 @@
     	generate_dummy_landmarks('/Users/chunwei/Downloads/NRRD_SUBJECTS/Fleck_008_landmarks/');
 
 ## Segmentation
-1. Apply segmentation on all processed images for a subject
+1. Apply segmentation on all processed images forsubjectect
     
     	sh segment_nrrd.sh ~/Data/NRRD_SUBJECTS/Fleck_008_landmarks/ ~/Data/NRRD_SUBJECTS/Fleck_008_segmentations/ ~/Data/NRRD_SUBJECTS/Fleck_008_processed/*.nrrd
