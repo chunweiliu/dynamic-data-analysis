@@ -10,7 +10,7 @@ if ~exist(output_folder, 'dir')
     mkdir(output_folder)
 end
 
-surfixs = {'TC*.acsv', 'TVC*.acsv'};
+surfixs = {'*TC*.acsv', '*TVC*.acsv'};
 landmarks = {'TracheaCarina', 'TVC'};
 
 for j = 1:length(surfixs)
