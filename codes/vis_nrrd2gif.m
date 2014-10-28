@@ -20,7 +20,6 @@ for i = 1:length(files)
     slice = slice.^.7;  % addjust brightnest
     
     % draw as gif
-    imshow(slice)
-    draw_gif(output_path, i)
+    draw_gif(output_path, i, slice)
     
 end

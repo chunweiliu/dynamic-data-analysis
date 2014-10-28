@@ -1,4 +1,5 @@
-function draw_gif(filename, i)
+function draw_gif(filename, i, slice)
+imshow(slice)
 drawnow
 
 set(gcf, 'color', [1 1 1])

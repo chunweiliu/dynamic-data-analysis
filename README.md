@@ -30,3 +30,9 @@
 
 ## Measurement
 1. Apply AirwayMeasurement
+
+# Visualization
+## One slide of dynamic data
+1. vis_nrrd2gif
+
+        >> vis_nrrd2gif('~/Data/NRRD_SUBJECTS/Fleck_008', '~/Data/NRRD_SUBJECTS/Fleck_008.gif');
