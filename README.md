@@ -32,6 +32,8 @@
 
 2. Execute the script
 
+        sh process.sh
+
 ## Measurement
 1. Apply AirwayMeasurement
 
