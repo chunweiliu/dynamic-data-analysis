@@ -1,7 +1,7 @@
 #!/bin/bash
-landmarkdir=$1  #~/Data/NRRD_SUBJECTS/Fleck_007_landmarks/
-outputpath=$2  #~/Data/NRRD_SUBJECTS/Fleck_007_segmentations/
-filepath=$3*.nrrd  #~/Data/NRRD_SUBJECTS/Fleck_007_processed/
+filepath=$1*.nrrd  #~/Data/NRRD_SUBJECTS/Fleck_007_processed/
+landmarkdir=$2  #~/Data/NRRD_SUBJECTS/Fleck_007_landmarks/
+outputpath=$3  #~/Data/NRRD_SUBJECTS/Fleck_007_segmentations/
 
 mkdir -p $outputpath
 for f in `ls $filepath`; do

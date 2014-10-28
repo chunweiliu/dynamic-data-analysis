@@ -41,7 +41,8 @@ for i = 1:length(files)
     segment_path = fullfile(input_folder,subject);
     landmark_path = fullfile(landmark_folder, ...
     	strcat(subject_name,'_landmarks.txt'));
-    clip_path = landmark_path;
+    clip_path = fullfile(landmark_folder, ...
+    	strcat(subject_name,'_clipping.txt'));
 
 
    	% generateCenterlineOfAirway(subject_name,segment_path,iso_path,...
