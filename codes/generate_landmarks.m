@@ -6,6 +6,10 @@ function generate_landmarks(input_folder, output_folder)
 prefix = strfind(input_folder, 'Fleck_');  % Fleck_0xx
 subject = input_folder(prefix:prefix+8);
 
+if ~exist(output_folder, 'dir')
+    mkdir(output_folder)
+end
+
 surfixs = {'TC*.acsv', 'TVC*.acsv'};
 landmarks = {'TracheaCarina', 'TVC'};
 
