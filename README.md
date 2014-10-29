@@ -23,7 +23,7 @@
 ## Segmentation
 1. Apply AirwaySegmenter on all pre-processed images for subject
     
-    	sh segment_nrrd.sh ~/Data/NRRD_SUBJECTS/Fleck_008_landmarks/ ~/Data/NRRD_SUBJECTS/Fleck_008_segmentations/ ~/Data/NRRD_SUBJECTS/Fleck_008_processed/
+    	sh segment_nrrd.sh ~/Data/NRRD_SUBJECTS/Fleck_008_processed/ ~/Data/NRRD_SUBJECTS/Fleck_008_landmarks/ ~/Data/NRRD_SUBJECTS/Fleck_008_segmentations/
 
 ## Processing
 1. Generate script for AirwayProcessing
