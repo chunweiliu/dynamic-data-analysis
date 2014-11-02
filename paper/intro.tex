@@ -1,0 +1,23 @@
+\section{Introduction}
+\label{sec:intro}
+% Why this problem is important?
+
+% What 3D CT can do?
+The analysis of pediatric airway geometry using computed tomography (CT) image has provided rich cues for doctors to diagnose respiratory issue for patients.
+For example, given a 3D segmentation of CT image, doctors can diagnose tracheal stenosis by locating the position has smaller cross-sectional area in the airway and compare it to an normal control atlas~\cite{Hong:2014:SAC}.
+
+% What 4D CT can do?
+Recently, dynamic CT data (4D CT) provides a better characterization of pediatric airways throughout the breathing cycle, for example to assess tracheomalacia, which is a disease of temporally collapse of partial airway.
+Comparing with spirometry, geometry analysis on 3D CT image provides additional information about {\it where} the respiratory issue might cause.
+Then 4D CT image provides more information about {\it when} the respiratory issue might cause during the breath cycle.
+
+% Where are we now?
+However, how to preprocess the increasing amount of dynamic data and how to analysis these data are still open questions.
+While standard techniques for analysis 3D CT could be applied on analysis 4D CT in a frame-by-frame fashion, two major challenges can be addressed as follow.
+First, manually annotations or preprocessing cost of each subject has increased a factor proportional to the number of CT scans in a breath cycle.
+Second, no information sharing between time steps might cause temporal inconsistence for the analysis.
+
+% Where should we go?
+In this work, I am going to address the above issues by performing dynamic data analysis using computer vision and machine learning approaches.
+Discussion based on experiments on real airway data would be compiled in the end of this report.
+In the future, I aim at building a 4D atlas for pediatric airways and to extend the approaches to other dynamic data modalities.

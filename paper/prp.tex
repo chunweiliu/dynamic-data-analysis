@@ -1,0 +1,95 @@
+% This is mymiccaipaper.tex the demonstration file of
+% MICCAI 2006 for Latex2e
+% adapted from LLNCS.DEM from
+% the LaTeX macro package from Springer-Verlag
+% for Lecture Notes in Computer Science,
+% version 2.2 for LaTeX2e
+%
+\documentclass{llncs}
+%
+\usepackage{makeidx}  % allows for indexgeneration
+%
+
+\usepackage{graphicx}
+\graphicspath{{pics/}{figs/}}
+% list here all the paths to your figure folders
+
+\begin{document}
+%
+\frontmatter          % for the preliminaries
+%
+%\pagestyle{headings}  % switches on printing of running heads
+\pagestyle{empty}  % switches off printing of running heads
+%
+\mainmatter              % start of your contributions
+%
+\title{Dynamic data analysis for pediatric airways}
+%
+\titlerunning{Short Title}  % abbreviated title (for running head)
+%
+\author{Chun-Wei Liu\inst{1}}
+%
+\authorrunning{C.-W. Liu}   % abbreviated author list (for running head)
+%
+%%%% modified list of authors for the TOC (add the affiliations)
+\tocauthor{Chun-Wei Liu (University of North Carolina at Chapel Hill)}
+%
+\institute{Department of Computer Science,
+University of North Carolina, Chapel Hill, \email{chunwei@cs.unc.edu}
+}
+
+% The following lines are used to remove authors and affiliations from
+% the front page and running titles
+\author{Chun-Wei Liu}
+\authorrunning{C.-W. Liu}
+\tocauthor{Chun-Wei Liu (UNC-CH)}
+\institute{Department of Computer Science,\\
+University of North Carolina, Chapel Hill, NC\\
+\email{chunwei@cs.unc.edu}}
+
+\maketitle              % typeset the title of the contribution
+
+\begin{abstract}
+The analysis of pediatric airway geometry using computed tomography (CT) images has provided rich diagnostic cues for doctors. Recently, dynamic CT data provides a better characterization of pediatric airways throughout the breathing cycle, for example to assess tracheomalacia. However, how to preprocess the increasing amount of dynamic data and how to analysis these data are still open questions. In this work, I performed dynamic data analysis using computer vision and machine learning approaches on synthetic and real airway data. In the future, I aim at building a 4D atlas for pediatric airways and to extend the approaches to other dynamic data modalities.
+\end{abstract}
+
+\input{intro.tex}
+
+\section{Methods}
+\label{sec:methods}
+% How do I approach it?
+
+\subsection{Landmark detection}
+\label{sec:landmark_detection}
+\subsection{Statical atlas building}
+\label{sec:statical_atlas_building}
+\subsection{Atypicality measurement}
+\label{sec:atypicality_measurment}
+
+So and so ..
+
+\section{Results}
+\label{sec:results}
+%  Figure~\ref{fig:sample} demonstrates our new
+% results.
+
+% \begin{figure}[tb]
+%   \begin{center}
+%     \begin{tabular}{ccc}
+% %      \includegraphics[height=1.2in,width=1cm] {fig1} &
+% %      \includegraphics[height=1.2in,width=10mm] {fig2} &
+% %      \includegraphics[height=1.2in,width=1in] {fig3}
+%     \end{tabular}
+%     \caption{ \label{fig:sample}      Illustration of xxx.
+%     }
+
+%   \end{center}
+% \end{figure}
+
+\section{Discussion}
+\label{sec:discussion}
+
+\bibliographystyle{splncs}
+\bibliography{prp}
+
+\end{document}
