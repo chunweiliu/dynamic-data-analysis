@@ -58,33 +58,69 @@ The analysis of pediatric airway geometry using computed tomography (CT) images 
 \section{Methods}
 \label{sec:methods}
 % How do I approach it?
+In terms of analysis subjects with huge varieties, data registration is an important step.
+Registration could be approached in different perspectives.
+First, registration on image, which uses image intensity as a major feature, has being developed in medical image analysis for past decade. 
+Hill et al. and Sotiras et al. wrote very educated review articles on this topic~\cite{hill2001medical,otiras2013deformable}.
+On the other hand, registration on shape, which uses geometric cues as major feature, has succeeded in many applications in computer vision and computer graphics fields~\cite{belongie2002shape,li2012temporally}.
+However, applying such techniques for aligning pediatric airway data was still a hard problem.
+Hong et al. proposed a simplified airway model which is much easier to register for further analysis~\cite{hong2014statistical}.
+
+% Need to familiar with
+\subsection{Simplified airway model}
+\label{sec:simplified_airway_model}
+In this work, I applied Hong et al.'s simplified airway algorithm.
+The algorithm first segments the airway from CT images using Otsu-thresholding and two manually chosen seeds that bracket the upper airway.
+Then the upper airway can be approximated by a centerline with cross sections.
+The centerline is inferred based on the heat distribution along the airway flow that is solved by a Laplace equation.
+Cross sections are cut from segmented airway geometry using planes that are orthogonal to the centerline. 
+The area of the cross sections would be the 1D functional data representation of an airway.
 
 \subsection{Landmark detection}
 \label{sec:landmark_detection}
-\subsection{Statical atlas building}
-\label{sec:statical_atlas_building}
-\subsection{Atypicality measurement}
-\label{sec:atypicality_measurment}
+Once we have functional data, we can register them alone with some common landmarks across subjects.
+Typically the landmark annotation was performed manually.
+For reducing the manually annotation cost, based on Dalal and Triggs's  detection framework~\cite{dalal2005histograms}, I propose a landmark detection framework using concatenating Histogram of Gaussian (HOG) features and geometric prior.
+
+The first step in the framework is to train a binary classifier using concatenating HOG.
+HOG is well designed normalized local histograms of image gradient orientation in a dense sample grid.
+The original purpose of this feature was for human detection.
+Nevertheless, it captures edge or gradient structure that is very characteristic of local shape, and it can be efficiently computed.
+For applying HOG on 3D image, instead computing histogram is arbitrary 3D orientation, I attempted to computed 2D HOG in axial, coronal, and sagittal plane, which are the three perspectives for user annotations.
+This reduced the computational complexity and made learning feasible given limit amount of ground truth annotations.
+In prediction stage, the trained classifier can be applied to the particular landmark it was designed for.
+Figure~\ref{fig:detection} illustrated detection of trachea carina (TC).
+
+After landmarks are located, we can register the functional data to the unified domain and make comparison on them.
+In Hong et al.'s original paper, each subject had five visible landmarks from nasal spine, choana, epiglottis tip, true vocal cord (TVC), and TC.
+In our dynamic data, most of subjects only have TVC and TC.
+Even thought, in some cases, TC is the only available landmark which makes alignment impossible using current approach.
+Then, a heuristic assumption would be applied to these special cases.
+The assumption is the subject has the same length of trachea from TVC to TC with the most relevant subject (in terms of age) in our data.
+Therefore, we can compute the portion of the existed trachea by measuring the ratio of the length of current trachea in physical space and the length of the most relevant subject from TVC to TC.
+
+\subsection{Statical atlas analysis}
+\label{sec:statical_atlas_analysis}
 
 So and so ..
 
-\section{Results}
-\label{sec:results}
+\section{Experiments}
+\label{sec:experiments}
+
 %  Figure~\ref{fig:sample} demonstrates our new
 % results.
 
-% \begin{figure}[tb]
-%   \begin{center}
-%     \begin{tabular}{ccc}
-% %      \includegraphics[height=1.2in,width=1cm] {fig1} &
-% %      \includegraphics[height=1.2in,width=10mm] {fig2} &
-% %      \includegraphics[height=1.2in,width=1in] {fig3}
-%     \end{tabular}
-%     \caption{ \label{fig:sample}      Illustration of xxx.
-%     }
-
-%   \end{center}
-% \end{figure}
+\begin{figure}[tb]
+  \begin{center}
+    \begin{tabular}{ccc}
+    \includegraphics[height=34.5mm] {fig/Fleck_005_geometry.png}
+    \includegraphics[height=35mm] {fig/landmark.png}
+    \includegraphics[height=34.5mm] {fig/Fleck_005_likelihood.png}
+    \end{tabular}
+    \caption{ \label{fig:detection} Visualization of the framework of landmark detection. First, an airway geometry is segmented by Otsu-thresholding. Green marker is the ground truth annotation and red marker is the predicted location of TC. Second, concatenating HOG features are computed in the center of trachea in each depth. From top to down: Sagittal, coronal, and axial. Final, applying the trained classifier on these different hypotheses to get likelihoods of the landmark. Dark red indicates the highest likelihood of TC. In this case, the predicted TC has only 1.97 mm (the total length is 159 mm) away from the ground truth annotation. The error is only 1.2$\%$.
+    }
+  \end{center}
+\end{figure}
 
 \section{Discussion}
 \label{sec:discussion}
