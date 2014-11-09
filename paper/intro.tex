@@ -5,8 +5,8 @@
 % What 3D CT can do?
 The analysis of pediatric airway geometry using 3D computed tomography (CT) images has provided rich cues for doctors to diagnose respiratory issue for patients.
 Both radiologists and physicians have been working on the field for a while.
-In image analysis side, radiologists Nakanoa et al. started to propose algorithm for measuring airway lumenal area using multidetector row CT~\cite{nakano2002development} one decade ago.
-On the other hand, physicians continuously adopted benefits from imaging analysis for their clinical studies, for example, how well their patients with issues caused by airway were recovered after surgeries~\cite{abramson2011three}.
+In image analysis side, radiologists started to propose algorithm for measuring airway lumenal area using multidetector row CT~\cite{nakano2002development} over the past decade.
+In the other respects, physicians adopted benefits from imaging analysis for their clinical studies, for example, how well their patients with issues caused by airway were recovered after surgeries~\cite{abramson2011three}.
 The progress made in image analysis these days was making the communication of both parties much easier by providing more informative statics from images.
 For instance, given a CT image from a subject with some manually annotative landmarks, machine is able to learn from CT images of normal control data to build a subject-specific control atlas (a mean statics from the population of the subject.) 
 Then machine can provide statics for where the positions have smaller cross-sectional area to doctors which makes diagnosing tracheal stenosis more actuary~\cite{hong2014statistical}.
@@ -25,9 +25,9 @@ However, how to preprocess the increasing amount of dynamic data and how to anal
 While standard techniques for analysis 3D CT images could be applied on analysis 4D CT images in a frame-by-frame fashion, two major challenges can be addressed as follow.
 First, manual annotation labors or preprocessing costs of each subject has increased a factor proportional to the number of CT scans in a breath cycle.
 Second, no information sharing between time steps makes temporal inconsistence for the analysis.
-In this work, I am going to address the above issues by performing dynamic data analysis using computer vision and machine learning approaches.
+In this work, I am going design an automatically 4D data processing framework to address the above issues by performing dynamic data analysis using computer vision and machine learning approaches.
 
 % Where should we go?
-In Section~\ref{sec:methods}, I will introduce the methods applying on pediatric airway analysis.
+In Section~\ref{sec:methods}, I will introduce the framework applying on pediatric airway analysis.
 Experiments on real airway data would be compiled in on Section~\ref{sec:experiments}.
 In Section~\ref{sec:discussion}, I will discuss about the future works, including building a 4D atlas for pediatric airways and extending the approaches to other dynamic data modalities.
