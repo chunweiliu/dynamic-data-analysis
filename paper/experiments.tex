@@ -1,6 +1,6 @@
 \section{Experiments}
 \label{sec:experiments}
-I applied above techniques on real world dynamic data.
+I applied the proposed framework on real world dynamic data.
 This section would reveal more implementation details and parameter settings, and also provide results and observations from experiments.
 
 \subsection{Landmark detection results}
@@ -26,8 +26,8 @@ Because an area drop is a critical feature for airway analysis, I considered upd
 \begin{figure}[tb]
   \begin{center}
     \begin{tabular}{ccc}
-    \includegraphics[height=35mm] {fig/d_TVC.png}
-    \includegraphics[height=35mm] {fig/dTC.png}
+    \includegraphics[width=\figwidth] {fig/d_TVC.png}
+    \includegraphics[width=\figwidth] {fig/dTC.png}
     \end{tabular}
     \caption{ \label{fig:landmark_dynamics} Visualization of the landmark dynamics of a 59 days subject. 
     }
@@ -37,17 +37,17 @@ Because an area drop is a critical feature for airway analysis, I considered upd
 \begin{figure}[tb]
   \begin{center}
     \begin{tabular}{ccc}
-    \includegraphics[height=35mm] {fig/registered_1_updates_0.png}
-    \includegraphics[height=35mm] {fig/registered_1_updates_1.png}
+    \includegraphics[width=\figwidth] {fig/registered_1_updates_0.png}
+    \includegraphics[width=\figwidth] {fig/registered_1_updates_1.png}
     \end{tabular}
-    \caption{ \label{fig:landmark_updated} Cross-sectional area of a 59 days subject with different registration landmarks. The left figure showed the result with same landmarks for each time steps. The right figure showed the results with updated landmarks for each time steps. Note that in depth around 0.8, a lower cross-sectional measurement was disappear in the left but remained in the right.
+    \caption{ \label{fig:landmark_updated} Cross-sectional area of a 59 days subject with different registration landmarks. {\bf Left.} The result with same landmarks. {\bf Right.} The result with updated landmarks. Note that in depth around 0.8, a lower cross-sectional measurement was disappear in the left but remained in the right.
     }
   \end{center}
 \end{figure}
 
 {\bf Training.} 
 The training set had 95 3D CT images with manually annotated landmarks from nasal spine, choana, epiglottis tip, TVC, and TC.
-I trained a linear SVM classifier for TC using concatenating HOG features.
+I trained a linear SVM classifier for TC using CHOG features.
 Each subject provided a positive example which would be HOG features extracting from three orthogonal bounding boxes passed through the landmark TC.
 The scale of the bounding boxes was determined by twice of the minimum rectangle covered the airway in the axial plane.
 The negative examples were drawn in random scale and location that not intersected with the positive bounding boxes.
@@ -63,46 +63,60 @@ Due to these outliers, the mean prediction error was 24.7436 (mm) and the standa
 \begin{figure}[tb]
   \begin{center}
     \begin{tabular}{ccc}
-    \includegraphics[height=35mm] {fig/CRL02_TracheaCarina_left.png}
-    \includegraphics[height=35mm] {fig/CRL04_TracheaCarina_left.png}
+    \includegraphics[width=\figwidth] {fig/CRL02_TracheaCarina_left.png}
+    \includegraphics[width=\figwidth] {fig/CRL04_TracheaCarina_left.png}
     \end{tabular}
-    \caption{ \label{fig:landmark_detection} Illustration of the likelihood of landmark TC. In most of case the detector can locate TC in a correct position (left). Even some fail cases still nominated the correct TC position as their second or third choice (right).
+    \caption{ \label{fig:landmark_detection} Illustration of the likelihood of landmark TC. {\bf Left.} In most cases the detector located TC in a correct position. {\bf Right.} Even fail cases still nominated the correct position as their second/third choice.
     }
   \end{center}
 \end{figure}
 
-Now let us try to apply the detector on dynamic data and see if it can handle landmark dynamics against the system dynamics.
-I applied the detector on a 134 month subject (Fleck-005).
-Table~\ref{tab:landmarks} summarized the errors of landmark prediction on TC for which neglecting landmark dynamics, and my landmark detector using concatenating HOG (HOG3)\footnote{One outlier is removed. Count the outlier than the mean would be 3.9280 mm (12.7448 px) and the std. would be 4.4680 mm (15.0649 px).}.
-My automatically landmark detector reduced the errors of the mean and standard deviation.
-However, the problem of outliers reminded in one time frame.
-The current landmark detection framework did a decent job yet there are some spaces of improvement.
 
 \begin{table}
   \centering
    \caption{Errors of landmark prediction methods of a 134 month subject (Fleck-005).
    }
-  \begin{tabular}{rcccc}
+  \begin{tabular}{r || cccc}
   & mean (mm) & std. (mm) & mean (px) & std. (px) \\
   \hline
   None & 4.7575 & 2.5314 & 18.6614 & 10.2052 \\
-  HOG3 & 2.8812 & 1.6134 & 9.3357 & 6.6279 \\
+  CHOG & 2.8812 & 1.6134 & 9.3357 & 6.6279 \\
   \end{tabular}
   \label{tab:landmarks}
 \end{table}
 
-\begin{figure}[tb]
-  \begin{center}
-    \begin{tabular}{ccc}
-    \includegraphics[height=35mm] {fig/landmark_errors.png}
-    \end{tabular}
-    \caption{ \label{fig:landmark_errors} Illustration of the landmark prediction errors in each time step. Red bar showed the errors of neglecting landmark dynamics and blue bar showed the errors from algorithm. Note that there is an outlier in time step 10.
-    }
-  \end{center}
-\end{figure}
+
+Now let us try to apply the detector on dynamic data and see if it can handle landmark dynamics against the system dynamics.
+I applied the detector on a 134 month subject (Fleck-005).
+Table~\ref{tab:landmarks} summarized the errors of landmark prediction on TC for which neglecting landmark dynamics, and my landmark detector using CHOG\footnote{One outlier is removed. Count the outlier than the mean would be 3.9280 mm (12.7448 px) and the std. would be 4.4680 mm (15.0649 px).}.
+My automatically landmark detector reduced the errors of the mean and standard deviation.
+However, the problem of outliers reminded in one time frame.
+The current landmark detection framework did a decent job yet there are some spaces of improvement.
+
+% \begin{figure}[tb]
+%   \begin{center}
+%     \begin{tabular}{ccc}
+%     \includegraphics[width=0.4\linewidth] {fig/landmark_errors.png}
+%     \end{tabular}
+%     \caption{ \label{fig:landmark_errors} Illustration of the landmark prediction errors in each time step for subject Fleck-005. Red bar showed the errors of neglecting landmark dynamics and blue bar showed the errors from algorithm. Note that there is an outlier in time step 10.
+%     }
+%   \end{center}
+% \end{figure}
 
 \subsection{Dynamic airway analysis}
 \label{sec:dynamic_airway_analysis}
+\begin{figure}[tb]
+  \begin{center}
+    \begin{tabular}{ccc}
+    \includegraphics[height=\figheight] {fig/Fleck_007.png}
+    \includegraphics[width=\figwidth] {fig/Fleck_007_wfbplot.png} \\
+    \includegraphics[height=\figheight] {fig/Fleck_008.png}
+    \includegraphics[width=\figwidth] {fig/Fleck_008_wfbplot.png} \\
+    \end{tabular}
+    \caption{ \label{fig:Fleck} Dynamic airway atlas for subject Fleck-007 and Fleck-008. {\bf Left.} A slice of dynamic data. {\bf Right.} The purple area is the interquartile range of normal control atlas. The blue curves are the boundary of the normal control atlas. The yellow area is the entire estimation range of the dynamic subject in different time steps. The depth is in a unified scale, where 0.66 is TVC and 1 is TC.
+    }
+  \end{center}
+\end{figure}
 I performed dynamic airway analysis using functional boxplots on real world data given by a physician.
 The normal control atlas was built from 68 health subjects in control group used the method in~\cite{hong2014statistical}.
 Figure~\ref{fig:Fleck} showed the results.
@@ -117,17 +131,3 @@ Also, the doctor gave the comment ``No significant change in the trachea or bron
 The airway seemed normal in one slide.
 Yet it was considered narrowed comparing with the normal control atlas, and it had large dynamics especially from the depth 0.87 to 1.
 Quote the doctor's comment ``Dynamic, 2.5 cm long narrowing of the mid to distal thoracic trachea caused by the adjacent left-sided aortic arch. The luminal diameter of the trachea changes from 11 mm during diastole to 5 mm in systole'', the subject did have problem on the mid to distal thoracic trachea, which agreed with the observation.
-
-
-\begin{figure}[tb]
-  \begin{center}
-    \begin{tabular}{ccc}
-    \includegraphics[height=35mm] {fig/Fleck_007_wfbplot.png}
-    \includegraphics[height=35mm] {fig/Fleck_007.png} \\
-    \includegraphics[height=35mm] {fig/Fleck_008_wfbplot.png}
-    \includegraphics[height=35mm] {fig/Fleck_008.png} \\
-    \end{tabular}
-    \caption{ \label{fig:Fleck} Dynamic airway atlas for subject Fleck-007 and Fleck-008. The purple area is the interquartile range of normal control atlas. The blue curves are the boundary of the normal control atlas. The yellow area is the entire estimation range of the dynamic subject in different time steps. The depth is in a unified scale, where 0.66 is TVC and 1 is TC.
-    }
-  \end{center}
-\end{figure}
