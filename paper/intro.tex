@@ -3,7 +3,7 @@
 % Why this problem is important?
 
 % What 3D CT can do?
-The analysis of pediatric airway geometry using 3D computed tomography (CT) images has provided rich cues for doctors to diagnose respiratory issue for patients.
+The analysis of pediatric airway geometry using 3D computed tomography (CT) images has provided rich cues for doctors to diagnose respiratory issues for patients.
 Both radiologists and physicians have been working on the field for a while.
 In image analysis side, radiologists started to propose algorithm for measuring airway lumenal area using multidetector row CT~\cite{nakano2002development} over the past decade.
 In the other respects, physicians adopted benefits from imaging analysis for their clinical studies, for example, how well their patients with issues caused by airway were recovered after surgeries~\cite{abramson2011three}.
@@ -13,21 +13,22 @@ Then machine can provide statics for where the positions have smaller cross-sect
 
 % What 4D CT can do?
 What can we learn from a four-dimensional CT (4D) image, an image set contains up to 16 3D CT images with respiratory motion induced image changes across the set that are not available on a single-component 3D CT image?
-If an edge of 3D CT images, comparing with spirometry, is on answering {\it where} a respiratory issue might be caused in the airway.
-Then, 4D CT images provide even more information about {\it when} the respiratory issue might be caused in a respiratory cycle.
-
+Compared to spirometry, analysis on 3D CT images provides additional information about the likely {\it location} causing respiratory distress.
+Furthermore, 4D CT images can provide information about {\it when} the respiratory issue occurs during the breathing cycle.
 Four-dimensional CT imaging was developed to provide an estimate of tumor motion for radiotherapy treatment planning~\cite{ford2003respiration}.
 After then, a method for dynamic ventilation imaging of the full respiratory cycle from 4D CT images was developed~\cite{guerrero2006dynamic}.
-Recently, 4D CT imaging has started to provided a better characterization of pediatric airways throughout the breathing cycle, for example to assess tracheomalacia, which is a disease of temporally collapse of partial airway.
+Recently, 4D CT imaging has provided a better characterization of pediatric airways throughout the breathing cycle, for example to assess tracheomalacia, which is a disease causing a temporary collapse of the partial airway.
 
 % Where are we now?
 However, how to preprocess the increasing amount of dynamic data and how to analysis these data for pediatric airways are still open questions.
-While standard techniques for analysis 3D CT images could be applied on analysis 4D CT images in a frame-by-frame fashion, two major challenges can be addressed as follow.
-First, manual annotation labors or preprocessing costs of each subject has increased a factor proportional to the number of CT scans in a breath cycle.
-Second, no information sharing between time steps makes temporal inconsistence for the analysis.
+While standard techniques to analyze 3D CT data could be applied for the analysis of 4D CT data in a frame-by-frame fashion, the following two major challenges need to be addressed:
+First, the cost of manual annotations or preprocessing increases proportionally to the number of CT scans in a breathing cycle.
+For example, a 4D CT data, including a set of 8 to 16 3D CT frames, took about 10 minutes for preprocessing each frame.
+Manually doing these preprocessing is time consuming.
+Second, by not sharing information between time steps of the breathing cycle temporal inconsistence may be caused for the analysis.
 In this work, I am going design an automatically 4D data processing framework to address the above issues by performing dynamic data analysis using computer vision and machine learning approaches.
 
 % Where should we go?
-In Section~\ref{sec:methods}, I will introduce the framework applying on pediatric airway analysis.
-Experiments on real airway data would be compiled in on Section~\ref{sec:experiments}.
-In Section~\ref{sec:discussion}, I will discuss about the future works, including building a 4D atlas for pediatric airways and extending the approaches to other dynamic data modalities.
+In Section~\ref{sec:methods}, I will introduce the framework applied to pediatric airway analysis.
+Experiments on real airway data are shown in Section~\ref{sec:experiments}.
+Section~\ref{sec:discussion} discusses the future works, including building a 4D atlas for pediatric airways and extending the approaches to other dynamic data modalities.
