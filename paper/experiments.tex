@@ -60,7 +60,7 @@ The negative examples were drawn at an uniform distributed scale and location th
 For each positive example, I drawn ten times negative samples.
 
 {\bf Detection.}
-For a 512x512x640 3D CT image, there are too many possible hypotheses of scale and location.
+For a 512$\times$512$\times$640 3D CT image, there are too many possible hypotheses of scale and location.
 I utilized a prior of geometry to eliminate possible hypotheses.
 Once we have the segmentation of the image, we only look at the segmented trachea for landmarks.
 In each depth I only drew one hypothesis from the center of the airway using the scale with the same heuristic in training.
@@ -81,25 +81,49 @@ Due to these outliers, the mean prediction error was 24.7436 (mm) and the standa
 \end{figure}
 
 
+% \begin{table}
+%   \centering
+%   \begin{tabular}{r || cccc}
+%   & mean (mm) & std. (mm) & mean (px) & std. (px) \\
+%   \hline
+%   None & 4.7575 & 2.5314 & 18.6614 & 10.2052 \\
+%   CHOG & 2.8812 & 1.6134 & 9.3357 & 6.6279 \\
+%   \end{tabular}
+%   \label{tab:landmarks}
+%   \caption{Errors of landmark prediction methods of a 134 month subject (Fleck-005).
+%    }
+% \end{table}
+
+
+Now let us apply the detector on dynamic data and see if it can handle landmark dynamics.
+% I applied the detector on a 134 month old subject (Fleck-005).
+Table~\ref{tab:Fleck_landmarks} summarized the landmark dynamics on TC, and my landmark detector using CHOG.
+The landmark detector works well on the subjects Fleck 004 and Fleck 012.
+But the detector perform bad on the other subjects.
+
 \begin{table}
   \centering
-   \caption{Errors of landmark prediction methods of a 134 month subject (Fleck-005).
-   }
-  \begin{tabular}{r || cccc}
-  & mean (mm) & std. (mm) & mean (px) & std. (px) \\
+  \begin{tabular}{|lcc|c|c|c|c|}
   \hline
-  None & 4.7575 & 2.5314 & 18.6614 & 10.2052 \\
-  CHOG & 2.8812 & 1.6134 & 9.3357 & 6.6279 \\
+  \multicolumn{3}{|c|}{Subjects} & \multicolumn{2}{|c|}{Landmark Dynamics} & \multicolumn{2}{|c|}{Landmark Prediction} \\
+  \hline
+  Id  & Age (m) & Weight (kg) & mean & std  & mean & std \\
+  \hline
+  Fleck 004 & 134.4   & 39.9  & 4.75 & 2.53 & 3.92 & 4.46 \\
+  Fleck 007 & 114     & 25.2  & 4.21 & 6.16 & 7.58 & 5.92 \\
+  Fleck 008 & 129.6   & 48.6  & 4.48 & 2.02 & 23.76 & 27.83 \\
+  Fleck 009 & 130.8   & 37    & 1.85 & 1.35 & 30.32 & 3.16 \\
+  Fleck 010 & 135.6   & 43.9  & 1.93 & 1.03 & 21.21 & 15.34 \\
+  Fleck 012 &  42     & 14.5  & 1.48 & 1.03 & 1.47 & 0.69 \\
+  Fleck 013 &  21.6   & 16.8  & 0.89 & 0.85 & 23.31 & 9.06 \\
+  \hline
   \end{tabular}
-  \label{tab:landmarks}
+  \caption{Qualitative measurement of the landmark detection. The prediction errors should be lower than the landmark dynamics. Currently, the detector only met this standard on the subjects Fleck 004 and Fleck 012.
+   }
+  \label{tab:Fleck_landmarks}
 \end{table}
-
-
-Now let us try to apply the detector on dynamic data and see if it can handle landmark dynamics.
-I applied the detector on a 134 month old subject (Fleck-005).
-Table~\ref{tab:landmarks} summarized the errors of landmark prediction on TC for when landmark dynamics are not considered, and my landmark detector using CHOG\footnote{One outlier is removed. Count the outlier than the mean would be 3.9280 mm (12.7448 px) and the std. would be 4.4680 mm (15.0649 px).}.
-My automatic landmark detector reduced the errors of the mean and standard deviation.
-However, the problem of outliers reminded for one frame.
+% My automatic landmark detector reduced the errors of the mean and standard deviation.
+% However, the problem of outliers reminded for one frame.
 
 % \begin{figure}[tb]
 %   \begin{center}
@@ -127,7 +151,7 @@ However, the problem of outliers reminded for one frame.
 \end{figure}
 I performed dynamic airway analysis using functional boxplots on real data provided by a physician.
 The normal control atlas was built from 68 healthy subjects in control group using the method in~\cite{hong2014statistical}.
-Figure~\ref{fig:Fleck} shows the results.
+Figure~\ref{fig:Fleck} shows the qualitative results.
 Here I compared these results with the comments from the doctor for two cases.
 
 {\bf Fleck-007, 114 months.}
@@ -141,3 +165,54 @@ Yet it was considered narrowed compared with the normal control atlas, and it ha
 The depth 0.66 means TVC and 1 means TC.
 So the subject had narrowed trachea near TC.
 Quote the doctor's comment ``Dynamic, 2.5 cm long narrowing of the mid to distal thoracic trachea caused by the adjacent left-sided aortic arch. The luminal diameter of the trachea changes from 11 mm during diastole to 5 mm in systole'', the subject did show problems in the mid to distal thoracic trachea, the analysis results qualitatively agree with the observation.
+
+Table~\ref{tab:Fleck} shows qualitative experiments on our dataset.
+I measured the cross-sectional area changes during the breathing.
+Studies suggested a subject with over 50\% changes of cross-sectional area during the breathing might be a suspected tracheomalacia~\cite{chung2011ct, boiselle2009tracheal, hasegawa2003tracheomalacia}. 
+Our system computed collapsed dynamics from 4D CT images, and gave qualitative measurement that agree with the studies and the diagnosis from our collaborator.
+\begin{table}
+  \centering
+  \begin{tabular}{|lcc|c|c|c|c|c|c|c|}
+  \hline
+  \multicolumn{3}{|c|}{Subjects} & \multicolumn{3}{|c|}{Dynamics} & \multicolumn{3}{|c|}{Collapsed Dynamics} & Diagnosis \\
+  \hline
+  Id  & Age (m) & Weight (kg) & min & mean & max  & min & mean & max &\\
+  \hline
+  Fleck 004 & 134.4  & 39.9   & 4\% & 14\% & 82\% & 12\%& 22\%& 82\% & Normal \\
+  Fleck 007 & 114 & 25.2      & 4\% & 8\%  & 20\% & 0\% & 0\% & 0\% &  Normal \\
+  Fleck 008 & 129.6   & 48.6  & 5\% & 22\% & 54\% & 31\%&39\% &53\% & Tracheomalacia \\
+  Fleck 009 & 130.8   & 37    & 7\% & 15\% & 43\% & 0\% & 0\% & 0\% &Normal \\
+  Fleck 010 & 135.6   & 43.9  & 4\% & 12\% & 19\% & 0\% & 0\% & 0\% & Normal \\
+  % Fleck 011 &  51.6   & 16.6        &&&     &      &     && Tracheomalacia \\
+  Fleck 012 &  42     & 14.5  & 11\% & 18\% & 44\% & 0\% & 0\% & 0\% &Normal \\
+  Fleck 013 &  21.6   & 16.8  & 1\% & 20\% & 68\% & 34\% & 56\% & 68\% & Tracheomalacia \\
+  % Fleck 014 &   7.2   &  6.5        &&&     &      &     && Tracheomalacia \\
+  \hline
+  \end{tabular}
+  \caption{Qualitative measurement of atypicality of dynamic subjects. The column Dynamics measures the entire dynamics through the airway. The Collapsed Dynamics measures only on the region which cross-sectional area is smaller than the normal control atlas.
+  Diagnosis is judged by our physician collaborator.
+   }
+  \label{tab:Fleck}
+\end{table}
+
+
+
+
+% \begin{table}
+%   \centering
+%    \caption{Errors of landmark prediction methods of a 134 month subject (Fleck-005).
+%    }
+%   \begin{tabular}{l | rrrr}
+%   Subjects & Ages (m) & Weight (kg) & \multicolumn{3}{c} Dynamics (entire) & Dynamics (focus) \\
+%   \hline
+%   Fleck 007 (11) & 114   & 25.2 \multicolumn{3} && \\
+%   Fleck 008 (16) & 129.6 & 48.6 && \\
+%   Fleck 009 (8) & 130.8 & 37 && \\
+%   Fleck 010 (16) & 135.6 & 43.9 && \\
+%   Fleck 011 (11) & 51.6 & 16.6 && \\
+%   Fleck 012 (8) & 42 & 14.5 && \\
+%   Fleck 013 (8) & 21.6 & 16.8 && \\
+%   Fleck 014 (8) & 7.2 & 6.5 && \\
+%   \end{tabular}
+%   \label{tab:Fleck}
+% \end{table}

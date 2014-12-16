@@ -1,0 +1,97 @@
+% This is mymiccaipaper.tex the demonstration file of
+% MICCAI 2006 for Latex2e
+% adapted from LLNCS.DEM from
+% the LaTeX macro package from Springer-Verlag
+% for Lecture Notes in Computer Science,
+% version 2.2 for LaTeX2e
+%
+\documentclass{article}
+\usepackage{fullpage}
+%
+\usepackage{makeidx}  % allows for indexgeneration
+%
+
+\usepackage[draft]{fixme}
+\usepackage{color}
+\newcommand{\mn}[1]{{\color{red}{#1}}}
+
+\newcommand{\figheight}[1]{55mm}
+\newcommand{\figwidth}[1]{0.45\linewidth}
+\newcommand{\figfullwidth}[1]{0.9\linewidth}
+
+\usepackage{graphicx}
+\graphicspath{{pics/}{figs/}}
+% list here all the paths to your figure folders
+
+
+\begin{document}
+%
+%\frontmatter          % for the preliminaries
+%
+%\pagestyle{headings}  % switches on printing of running heads
+%\pagestyle{empty}  % switches off printing of running heads
+%
+%\mainmatter              % start of your contributions
+%
+\title{Image registration on 4D pediatric airways data}
+%
+%\titlerunning{Short Title}  % abbreviated title (for running head)
+%
+\author{Chun-Wei Liu}
+%
+%\authorrunning{C.-W. Liu}   % abbreviated author list (for running head)
+%
+%%%% modified list of authors for the TOC (add the affiliations)
+%\tocauthor{Chun-Wei Liu (University of North Carolina at Chapel Hill)}
+%
+%\institute{Department of Computer Science,
+%University of North Carolina, Chapel Hill, \email{chunwei@cs.unc.edu}
+%}
+
+% The following lines are used to remove authors and affiliations from
+% the front page and running titles
+%\author{Chun-Wei Liu}
+%\authorrunning{C.-W. Liu}
+%\tocauthor{Chun-Wei Liu (UNC-CH)}
+%\institute{Department of Computer Science,\\
+%University of North Carolina, Chapel Hill, NC\\
+%\email{chunwei@cs.unc.edu}}
+
+\maketitle              % typeset the title of the contribution
+
+{\bf Motivation.} 
+To perform data analysis for subjects with spatial differences, spatial normalization in the form of registration is an important step.
+Registration can be approached in different ways.
+First, image registration, which uses image intensities as features, has been developed in medical image analysis for the past decade.
+Most of these methods have to do with defining an energy function with data term (dissimilarity between source image and target image) and regularization term (atypicality of mapping from source image to target image),
+and then develop optimization method to find a best mapping which minimizes such energy.
+See the review articles by Hill et al. and Sotiras et al. on this topic~\cite{hill2001medical,otiras2013deformable} for details.
+For particular application for registration on one subject among a short time period, Guerrero et al. developed a deformable algorithm for dynamic ventilation imaging from 4D CT~\cite{guerrero2006dynamic}.
+In this project, I would like to apply registration techniques using Advanced Normalization Tools (ANTs) on 4D CT pediatric airway images.
+
+{\bf Data.} 
+The 4D CT airway pediatric images are provided from our collaborator.
+A 4D CT airway pediatric image is a set of 3D CT images which were captured in a period of time.
+The scanning machine uses a 0.350 second rotation time and from that two half scans are produce.
+The scanning interval is chosen based on the respiratory rate.
+In our dataset, typically a 4D CT image has 8-16 frames.
+The start of scan is random when the patient is breathing on their own.
+But the end of scan matches at the time when the patient finished their breathing cycle.
+Overall, each dynamic volume represents 0.175 second of data.
+
+{\bf Method.}
+The ANTs library has many image registration techniques: including Diffeomorphisms, Independent Evaluation, and Template Construction.
+To model the continuous changes during a breathing cycle, I will try Diffeomorphisms as my first attempt.
+
+
+{\bf Evaluation.}
+I plan using annotated landmarks to evaluate the registration results.
+In our 4D CT data, each frame would have a visible landmark Trachea Carina (TC).
+By tracking these TC landmarks, we have a rough idea how does the subject move.
+This evaluation is not fully addressing the image registration quality, but it is useful if we want to use these landmarks later.
+For example, aligning different subjects might be hard, but reducing different subjects to functional data and aligning these data using landmarks is tractable.
+
+\bibliographystyle{splncs}
+\bibliography{prp}
+
+\end{document}

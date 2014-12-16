@@ -5,10 +5,11 @@
 % What 3D CT can do?
 The analysis of pediatric airway geometry using 3D computed tomography (CT) images has provided rich cues for doctors to diagnose respiratory issues for patients.
 Both radiologists and physicians have been working on the field for a while.
-In image analysis side, radiologists started to propose algorithm for measuring airway lumenal area using multidetector row CT~\cite{nakano2002development} over the past decade.
-In the other respects, physicians adopted benefits from imaging analysis for their clinical studies, for example, how well their patients with issues caused by airway were recovered after surgeries~\cite{abramson2011three}.
+In the image analysis side over the past decade, radiologists started to propose the algorithm for measuring airway lumenal area using multidetector row CT~\cite{nakano2002development}.
+In the other respects, physicians adopted benefits from imaging analysis for their clinical studies. 
+For example, how their patients with airway issues were recovered after surgeries~\cite{abramson2011three}.
 The progress made in image analysis these days was making the communication of both parties much easier by providing more informative statics from images.
-For instance, given a CT image from a subject with some manually annotative landmarks, machine is able to learn from CT images of normal control data to build a subject-specific control atlas (a mean statics from the population of the subject.) 
+For instance, given a CT image from a subject with some manually annotative landmarks, a machine is able to learn from CT images of normal control data to build a subject-specific control atlas (a mean statics from the population of the subject.) 
 Then machine can provide statics for where the positions have smaller cross-sectional area to doctors which makes diagnosing tracheal stenosis more actuary~\cite{hong2014statistical}.
 
 % What 4D CT can do?
@@ -26,7 +27,7 @@ First, the cost of manual annotations or preprocessing increases proportionally 
 For example, a 4D CT data, including a set of 8 to 16 3D CT frames, took about 10 minutes for preprocessing each frame.
 Manually doing these preprocessing is time consuming.
 Second, by not sharing information between time steps of the breathing cycle temporal inconsistence may be caused for the analysis.
-In this work, I am going design an automatically 4D data processing framework to address the above issues by performing dynamic data analysis using computer vision and machine learning approaches.
+In this work, I am going design an automatic 4D data processing framework to address the above issues by performing dynamic data analysis using computer vision and machine learning approaches.
 
 % Where should we go?
 In Section~\ref{sec:methods}, I will introduce the framework applied to pediatric airway analysis.

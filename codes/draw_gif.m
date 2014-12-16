@@ -1,6 +1,8 @@
 function draw_gif(filename, i, slice)
-imshow(slice)
-drawnow
+if nargin == 3
+    imshow(slice)
+    drawnow
+end
 
 set(gcf, 'color', [1 1 1])
 

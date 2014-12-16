@@ -23,7 +23,6 @@ On the other hand, shape registration, which uses geometric cues as major featur
 With the same fashion of energy minimization framework as image registration, these methods rely on shape features, e.g. curvature or level of bending, to define the data term.
 However, using such techniques to align pediatric airway data is still difficult.
 Hong et al. proposed a simplified airway model which allows for much easier registration for further analysis~\cite{hong2014statistical}.
-In my work, I have the same interest of upper airway as Hong et al.
 Figure~\ref{fig:Fleck} shows the anatomy I am looking at in this work.
 I started this project by extending Hong et al.'s simplified airway model to a 4D CT processing framework.
 Figure~\ref{fig:framework} illustrated the automatic 4D CT processing framework.
@@ -32,20 +31,20 @@ Figure~\ref{fig:framework} illustrated the automatic 4D CT processing framework.
 % Need to familiar with
 \subsection{Image preprocessing and segmentation}
 \label{sec:image_preprocessing_and_segmentation}
-The algorithm segmented the airway from 3D CT image using Otsu's method and two manually chosen seeds that bracket the upper airway.
-For better adaptive to current medical image processing libraries, the framework starts with transform data from DICOM images to NRRD images.
+The algorithm segmented the airway from 3D CT image using Otsu's method and two manually chosen seeds that bracket the airway.
+For better adaptive to current medical image processing libraries, the framework starts with reformatting data from DICOM images to NRRD images.
 Then a padding and filtering operator for making the image boundary has the same intensity as air is applied on NRRD images.
 With scripts automatically applying preprocessing programs reduced costs of manually operating medical image softwares, such as Slicer or ParaView.
 
-Otsu's method finding a threshold to separate data into two clusters, so as to try to make each cluster as tight as possible.
+Otsu's method finds a threshold to separate data into two clusters, so as to try to make each cluster as tight as possible.
 This is achieved by maximizing the inter-subject variances and minimizing intra-subject variances in terms of voxel intensity.
 In our case for segmenting airway, the two clusters were air and non-air regions.
-To remove the air regions that were not in the airway, morphological operator erosion first be applied to remove the actual airway.
+To remove the air regions that were not in the airway, morphological operator closing (with a sphere structuring pattern) first be applied to remove the actual airway.
 This computed a map of air regions outside the subject.
 We can apply the map as a filter to remove the air outside the airway to get a clean airway in the subject.
 Then, two seeds further help to extract trachea and exclude bronchus in the airway.
 
-With this segmentation, the upper airway can be approximated by statical models~\cite{pizer2013nested}.
+With this segmentation, the airway can be approximated by statistical models~\cite{pizer2013nested}.
 Focus on measuring the size of airway, we used a centerline with cross sections to represent the airway.
 The centerline is inferred based on the heat distribution along the airway flow that is solved for by a Laplace equation.
 Cross sections are cut from segmented airway geometry using planes that are orthogonal to the centerline. 
@@ -60,7 +59,7 @@ The area of the cross sections along the airway is then used as a 1D functional 
     \includegraphics[height=\figheight] {fig/landmark.png}
     \includegraphics[height=\figheight] {fig/Fleck_005_likelihood.png}
     \end{tabular}
-    \caption{ \label{fig:detection} Visualization of the framework of landmark detection. {\bf Left.} First, an airway geometry is segmented by Otsu-thresholding. Green marker is the ground truth annotation and red marker is the predicted location of TC. {\bf Middle.} Second, CHOG features are computed in the center of the trachea in each location along the airway. From top to down: Sagittal, coronal, and axial slices. {\bf Right.} Finally, results of applying the trained classifier on these different hypotheses to get likelihoods of the landmark. Dark red indicates the highest likelihood of TC. In this case, the predicted TC is only 1.97 mm (the total length of the airway is 159 mm) away from the ground truth annotation. This error is only 1.2$\%$ of the entire airway.
+    \caption{ \label{fig:detection} Visualization of the framework of landmark detection. {\bf Left.} First, an airway geometry is segmented by Otsu-thresholding. Green marker is the ground truth annotation and red marker is the predicted location of TC. {\bf Middle.} Second, CHOG features are computed in the center of the trachea in each location along the airway. From top to down: the Axial, sagittal, and coronal plane. {\bf Right.} Finally, visualization of the probabilities of applying the trained classifier on these different hypotheses. Dark red indicates the highest likelihood of TC. In this case, the predicted TC is only 1.97 mm (the total length of the airway is 159 mm) away from the ground truth annotation. This error is only 1.2$\%$ of the entire airway.
     }
   \end{center}
 \end{figure}
@@ -70,7 +69,7 @@ Typically landmarks are determined manually.
 To reduce the manual annotation cost, based on Dalal and Triggs's object detection framework~\cite{dalal2005histograms}, I propose a landmark detection framework using concatenated Histogram of Gaussian (CHOG) features and a geometric prior. 
 Figure~\ref{fig:detection} illustrates the detection of the trachea carina (TC).
 The goal of the landmark detection is to capture the dynamics of landmarks.
-Therefore, the accuracy of landmark detection should be higher enough to compensate the dynamics in the 4D CT image.
+Therefore, the accuracy of landmark detection should be high enough to compensate the dynamics in the 4D CT image.
 If the prediction error is larger than the actual dynamics in the 4D CT image, then the predicted location cannot be determined.
 
 HOG is well designed normalized local histograms of image gradient orientation in a dense sample grid.
@@ -86,7 +85,7 @@ In this work, I used this simple trick to generalize HOG from 2D to 3D.
 The first step of the landmark detection framework then is to train a binary classifier using CHOG.
 For doing high dimensional data and low sample size statical analysis, Distance Weighted Discrimination can be applied to improve the training~\cite{marron2007distance}.
 Yet, for simplistic and speed, linear Support Vector Machine (SVM) is used as a baseline throughout study.
-In the prediction stage, the trained classifier can then be applied to the detect the particular landmark it was deigned for.
+In the prediction stage, the trained classifier can then be applied to the detect the particular landmark.
 Higher score generally implies a higher likelihood of a hypothesis.
 
 After landmarks are located, I registered the functional data using b-spline curve registration~\cite{ramsay2006functional}.
@@ -100,7 +99,7 @@ Given we have decent amount of data,
 the assumption is that a given subject has the same length of trachea from TVC to TC as the most relevant subject (in terms of age) in our dataset.
 Therefore, we can compute the proportion of the imaged trachea by measuring the ratio of the length of the current trachea in physical space and the length of the most relevant subject from TVC to TC.
 
-\subsection{Statical atlas analysis}
+\subsection{Statistical atlas analysis}
 \label{sec:statical_atlas_analysis}
 Given spatially aligned functional data I would like to capture population changes with respect to some factors, say age.
 We can use a blending kernel applying on the dataset to interpret a subject with the target age.
@@ -112,17 +111,17 @@ Functional boxplots were originally proposed by Sun and Genton~\cite{sun2011func
 Band depth is used to rank functional data for ordering it from the center outward.
 To order functional data, we first define a subset and the membership of a data in the subset.
 Given a functional dataset, any two function curves in the dataset can form a set in which the region between these two curves belong.
-A curve is fully belong in this subset if it is in the region from the beginning to the end of the function.
+A curve fully belongs in this subset if it is in the region from the beginning to the end of the function.
 A curve might be partially belong in the subset.
 Figure~\ref{fig:vis_fbplot} shows the difference.
-A band depth of a functional data curve can be defined as the ratio of the number of subset in which data is fully belong over all possible subsets.
+A band depth of a functional data curve can be defined as the ratio of the number of subset in which data fully belongs over all possible subsets.
 
 \begin{figure}[tb]
   \begin{center}
     \begin{tabular}{ccc}
     \includegraphics[height=35mm] {fig/illustration_fbplots.png}
     \end{tabular}
-    \caption{ \label{fig:vis_fbplot} Visualization of the band depth. The red curve is fully belonged to the shaded region, but the blue curve is partially belonged to the shaded region.
+    \caption{ \label{fig:vis_fbplot} Visualization of the band depth. The red curve fully belongs to the shaded region, but the blue curve is partially belonged to the shaded region.
     }
   \end{center}
 \end{figure}
@@ -135,7 +134,7 @@ D(y; Y) = \sum_{y_i, y_j \in C(Y)} I[y \subset B(y_i, y_j)],
 \label{eq:band_depth}
 \end{equation}
 where $I$ is an indicator function.
-A generalize version of band depth is the weighted modified band depth
+A generalized version of band depth is the weighted modified band depth
 
 \begin{equation}
 D'(y; Y) = \sum_{y_i, y_j \in C(Y)} w_iw_j\lambda[ B(y_i, y_j) ]
@@ -144,6 +143,14 @@ D'(y; Y) = \sum_{y_i, y_j \in C(Y)} w_iw_j\lambda[ B(y_i, y_j) ]
 where $\lambda$ is the Lebesgue measure, and $w$s are the weights of data for fitting the population.
 If a curve $y$ is only partially in a subset $B(y_i,y_j)$, the $\lambda$ measures the ratio of time that $y$ is in the subset $B(y_i,y_j)$.
 If a curve is fully in the subset, the $\lambda$ measurement is one.
+I applied (\ref{eq:weighted_band_depth}) to compute a population atlas and to plot subject dynamics upon the population atlas using (\ref{eq:band_depth}).
 
 When a rank of functional data is available, we can compute interesting statistics such as median, interquartile range, and outliers of the population.
-I applied (\ref{eq:weighted_band_depth}) to compute a population atlas and to plot subject dynamics upon the population atlas using (\ref{eq:band_depth}).
+For example, given a set of dynamic data $S$ and a normal control atlas $N$, to identify an abnormal airway collapse, we can apply point estimator on the functional data that is out of the normal control atlas.
+The maximum ``Collapsed dynamics'' can be defined as
+\begin{equation}
+% E(S, N) = \frac{\max_i(s_i)-\min_i(s_i)}{\max_i(s_i)}, \forall i, j s^j_i \in S < \inf N_i.
+E(S, N) = \frac{\max_x(s_x)-\min_x(s_x)}{\max_x(s_x)},
+\label{eq:collapsed_dynamics}
+\end{equation}
+where $x=\{i, s_i < n_i | s \in S, n = \inf N \}$
